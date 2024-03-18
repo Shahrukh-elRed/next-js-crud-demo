@@ -1,0 +1,10 @@
+.headerContainer {
+  width: 100%;
+  background-color: black;
+}
+
+.headerText {
+  color: white;
+  font-size: 30px;
+  padding: 10px 20px;
+}
