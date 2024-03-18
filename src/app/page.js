@@ -1,31 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const usersData = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Smith",
-      phoneNumber: "9810101010",
-      email: "john@test.com",
-    },
-    {
-      id: 2,
-      firstName: "Allen",
-      lastName: "Walker",
-      phoneNumber: "9810101234",
-      email: "allen@test.com",
-    },
-    {
-      id: 3,
-      firstName: "Mark",
-      lastName: "Manson",
-      phoneNumber: "9812345678",
-      email: "mark@test.com",
-    },
-  ];
+  const [usersData, setUsersData] = useState([]);
+
+  const fetchusers = async () => {
+    let result = await fetch("/api/users");
+    result = await result.json()
+    setUsersData(result.result)
+  }
+
+  useEffect(() => {
+    fetchusers()
+  }, [])
 
   const goToAddUser = () => {
     router.push("/addnewuser");
@@ -44,6 +33,9 @@ export default function Home() {
   const viewUserDetails = (id) => {
     router.push("/viewuser/" + id);
   };
+
+  if (usersData.length === 0) 
+  return <div>No users found</div>
 
   return (
     <main>
@@ -73,9 +65,9 @@ export default function Home() {
           <tbody>
             {usersData.map((user, index) => (
               <tr
-                key={user.id}
+                key={user._id}
                 className="user-table-data-row"
-                onClick={() => viewUserDetails(user.id)}
+                onClick={() => viewUserDetails(user._id)}
               >
                 <td>{index + 1}</td>
                 <td className="user-table-name">
@@ -85,7 +77,7 @@ export default function Home() {
                 <td>{user.email}</td>
                 <td>
                   <button
-                    onClick={(e) => goToUserEdit(user.id, e)}
+                    onClick={(e) => goToUserEdit(user._id, e)}
                     className="user-table-delete-btn"
                   >
                     Edit
@@ -93,7 +85,7 @@ export default function Home() {
                 </td>
                 <td>
                   <button
-                    onClick={(e) => deleteUser(user.id, e)}
+                    onClick={(e) => deleteUser(user._id, e)}
                     className="user-table-edit-btn"
                   >
                     Delete

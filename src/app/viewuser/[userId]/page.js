@@ -15,7 +15,7 @@ const ViewUser = () => {
       <div className="user-detail-container">
         <div className="user-detail-row">
           <span className="user-detail-left-heading">User Id : </span>
-          <span className="user-detail-right">{userData.id}</span>
+          <span className="user-detail-right">{userData._id}</span>
         </div>
         <div className="user-detail-row">
           <span className="user-detail-left-heading">First Name : </span>
