@@ -11,7 +11,7 @@ const ViewUser = () => {
 
   return (
     <div className="user-details-page-container">
-      <div className="user-table-header">User Details</div>
+      <div className="user-table-header margin-left-header">User Details</div>
       <div className="user-detail-container">
         <div className="user-detail-row">
           <span className="user-detail-left-heading">User Id : </span>

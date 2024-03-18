@@ -30,6 +30,10 @@ a {
   width: 75%;
 }
 
+.margin-left-header {
+  margin-left: 3%;
+}
+
 .user-table-header-one,
 .user-table-header-two,
 .user-table-header-three,
@@ -146,4 +150,19 @@ button:focus {
   display: inline-flex;
   font-weight: 500;
   width: 20%;
+}
+
+@media only screen and (max-width: 850px) {
+  .user-detail-left-heading {
+    display: flex;
+    font-weight: 500;
+    width: 90%;
+    padding-bottom: 12px;
+  }
+
+  .user-detail-row {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
 }
