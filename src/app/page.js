@@ -31,11 +31,13 @@ export default function Home() {
     console.log("add user clicked");
   };
 
-  const goToUserEdit = (id) => {
+  const goToUserEdit = (id, e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
     console.log("edit user id => ", id);
   };
 
-  const deleteUser = (id) => {
+  const deleteUser = (id, e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
     console.log("delete user id => ", id);
   };
 
@@ -83,7 +85,7 @@ export default function Home() {
                 <td>{user.email}</td>
                 <td>
                   <button
-                    onClick={() => goToUserEdit(user.id)}
+                    onClick={(e) => goToUserEdit(user.id, e)}
                     className="user-table-delete-btn"
                   >
                     Edit
@@ -91,7 +93,7 @@ export default function Home() {
                 </td>
                 <td>
                   <button
-                    onClick={() => deleteUser(user.id)}
+                    onClick={(e) => deleteUser(user.id, e)}
                     className="user-table-edit-btn"
                   >
                     Delete
