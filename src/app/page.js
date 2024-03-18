@@ -1,6 +1,8 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const usersData = [
     {
       id: 1,
@@ -37,6 +39,10 @@ export default function Home() {
     console.log("delete user id => ", id);
   };
 
+  const viewUserDetails = (id) => {
+    router.push("/viewuser/" + id);
+  };
+
   return (
     <main>
       <div className="user-table-header-container">
@@ -64,7 +70,11 @@ export default function Home() {
           </thead>
           <tbody>
             {usersData.map((user, index) => (
-              <tr key={user.id}>
+              <tr
+                key={user.id}
+                className="user-table-data-row"
+                onClick={() => viewUserDetails(user.id)}
+              >
                 <td>{index + 1}</td>
                 <td className="user-table-name">
                   {user.firstName + " " + user.lastName}

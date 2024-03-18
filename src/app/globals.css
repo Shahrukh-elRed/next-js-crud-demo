@@ -51,7 +51,7 @@ a {
 
 .user-data-table {
   width: 80%;
-  margin: 40px auto 0;
+  margin: 40px auto 20px;
 }
 
 table,
@@ -61,6 +61,17 @@ td {
   border-collapse: collapse;
   padding: 8px;
   text-align: center;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.user-table-data-row {
+  cursor: pointer;
+}
+
+.user-table-data-row:hover {
+  background-color: rgb(231, 229, 229);
 }
 
 .user-table-name {
@@ -72,6 +83,9 @@ button {
   outline: none;
   cursor: pointer;
   border-radius: 5px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 button:focus {
@@ -96,4 +110,40 @@ button:focus {
   color: #fff;
   background-color: green;
   vertical-align: middle;
+}
+
+.user-details-page-container {
+  margin: 0 10%;
+}
+
+.user-detail-container {
+  margin: 40px auto 20px;
+  padding: 10px;
+  background-color: rgb(230, 229, 229);
+  border-radius: 12px;
+}
+
+.user-detail-row {
+  padding: 15px;
+}
+
+.home-link-container {
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.home-link {
+  color: #fff;
+  font-weight: 500;
+  background-color: green;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.user-detail-left-heading {
+  display: inline-flex;
+  font-weight: 500;
+  width: 20%;
 }
