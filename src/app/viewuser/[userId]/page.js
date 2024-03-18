@@ -21,10 +21,11 @@ const ViewUser = () => {
           <span className="user-detail-left-heading">First Name : </span>
           <span className="user-detail-right">{userData.firstName}</span>
         </div>
-
         <div className="user-detail-row">
           <span className="user-detail-left-heading">Last Name : </span>
-          <span className="user-detail-right">{userData.lastName}</span>
+          <span className="user-detail-right">
+            {userData.lastName ? userData.lastName : "N/A"}
+          </span>
         </div>
         <div className="user-detail-row">
           <span className="user-detail-left-heading">Phone Number : </span>

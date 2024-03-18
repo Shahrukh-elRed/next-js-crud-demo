@@ -33,7 +33,7 @@ export default function Home() {
 
   const goToUserEdit = (id, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
-    console.log("edit user id => ", id);
+    router.push("/edituser/" + id);
   };
 
   const deleteUser = (id, e) => {
