@@ -28,7 +28,7 @@ export default function Home() {
   ];
 
   const goToAddUser = () => {
-    console.log("add user clicked");
+    router.push("/addnewuser");
   };
 
   const goToUserEdit = (id, e) => {
