@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import { useState } from "react";
 
 const AddNewUser = () => {
@@ -11,23 +11,49 @@ const AddNewUser = () => {
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  success && redirect("/");
+
+  const createNewUser = async () => {
+    let result = await fetch("/api/createuser", {
+      method: "POST",
+      body: JSON.stringify({ firstName, lastName, phoneNumber, email }),
+    });
+    result = await result.json();
+    if (result.success) setSuccess(true);
+  };
 
   const validateAllInputs = () => {
-    if (firstName === "" || firstName.length <= 3)
-      setFirstNameError("First Name should be atleast 4 characters long");
-    if (phoneNumber.length !== 10)
-      setPhoneNumberError("Phone number should be of 10 digits");
-    if (email === "") setEmailError("Email cannot be empty");
+    let hasErrors = false;
+    if (firstName === "" || firstName.length <= 2) {
+      setFirstNameError(
+        (prev) => (prev = "First Name should be atleast 3 characters long")
+      );
+      hasErrors = true;
+    }
+    if (phoneNumber.length !== 10) {
+      setPhoneNumberError(
+        (prev) => (prev = "Phone number should be of 10 digits")
+      );
+      hasErrors = true;
+    }
+    if (email === "") {
+      setEmailError((prev) => (prev = "Email cannot be empty"));
+      hasErrors = true;
+    }
     const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!validateEmail) setEmailError("Invalid email");
+    if (!validateEmail) {
+      setEmailError("Invalid email");
+      hasErrors = true;
+    }
+
+    if (!hasErrors) createNewUser();
   };
 
   const addUser = (e) => {
     e.preventDefault();
     validateAllInputs();
-
-    if (firstNameError || phoneNumberError || emailError) return false;
-    console.log("clicked");
   };
 
   return (
