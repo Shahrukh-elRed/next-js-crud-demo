@@ -185,6 +185,12 @@ input:focus {
   outline: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .add-user-btn-container {
   display: flex;
   width: 50%;
@@ -224,4 +230,14 @@ input:focus {
     width: 100%;
     justify-content: center;
   }
+}
+
+.error-message {
+  margin-top: -10px;
+  color: rgb(212, 0, 0);
+  font-size: 12px;
+}
+
+.text-input-field-error {
+  border: 2px solid rgb(212, 0, 0);
 }
