@@ -15,20 +15,58 @@ a {
   text-decoration: none;
 }
 
+.user-table-header-container {
+  display: flex;
+  justify-content: center;
+}
+
 .user-table-header {
   font-weight: 500;
   font-size: 30px;
   margin: 40px 0 0 0;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  width: 550px;
 }
 
 .user-data-table {
-  border: 1px solid #000;
   margin: 40px auto 0;
 }
 
-.user-data-table td {
+table,
+th,
+td {
   border: 1px solid #000;
   border-collapse: collapse;
   padding: 8px;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:focus {
+  border: none;
+  outline: none;
+}
+
+.user-table-delete-btn {
+  padding: 6px 10px;
+  color: #fff;
+  background-color: rgb(200, 33, 33);
+}
+
+.user-table-edit-btn {
+  padding: 6px 10px;
+  color: #fff;
+  background-color: rgb(25, 25, 150);
+}
+
+.table-add-user-btn {
+  padding: 8px 12px;
+  color: #fff;
+  background-color: green;
 }

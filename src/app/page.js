@@ -1,3 +1,5 @@
+"use client";
+
 export default function Home() {
   const usersData = [
     {
@@ -23,9 +25,30 @@ export default function Home() {
     },
   ];
 
+  const goToAddUser = () => {
+    console.log("add user clicked");
+  };
+
+  const goToUserEdit = (id) => {
+    console.log("edit user id => ", id);
+  };
+
+  const deleteUser = (id) => {
+    console.log("delete user id => ", id);
+  };
+
   return (
     <main>
-      <div className="user-table-header">Users List</div>
+      <div className="user-table-header-container">
+        <div className="user-table-header">
+          <span>Users List</span>
+          <span>
+            <button onClick={goToAddUser} className="table-add-user-btn">
+              Add New User
+            </button>
+          </span>
+        </div>
+      </div>
       <table className="user-data-table">
         <thead>
           <tr>
@@ -33,6 +56,7 @@ export default function Home() {
             <td>Name</td>
             <td>Phone Number</td>
             <td>Email</td>
+            <td colSpan={2}>Actions</td>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +66,22 @@ export default function Home() {
               <td>{user.firstName + " " + user.lastName}</td>
               <td>{user.phoneNumber}</td>
               <td>{user.email}</td>
+              <td>
+                <button
+                  onClick={() => goToUserEdit(user.id)}
+                  className="user-table-delete-btn"
+                >
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button
+                  onClick={() => deleteUser(user.id)}
+                  className="user-table-edit-btn"
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
