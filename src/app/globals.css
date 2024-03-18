@@ -26,10 +26,31 @@ a {
   margin: 40px 0 0 0;
   display: flex;
   justify-content: space-between;
-  width: 550px;
+  align-items: center;
+  width: 75%;
+}
+
+.user-table-header-one,
+.user-table-header-two,
+.user-table-header-three,
+.user-table-header-four,
+.user-table-header-five {
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+  background-color: #000;
+}
+
+.user-table-header-one {
+  max-width: 40px;
+}
+
+.user-data-table-container {
+  overflow-x: auto;
 }
 
 .user-data-table {
+  width: 80%;
   margin: 40px auto 0;
 }
 
@@ -39,6 +60,11 @@ td {
   border: 1px solid #000;
   border-collapse: collapse;
   padding: 8px;
+  text-align: center;
+}
+
+.user-table-name {
+  text-align: start !important;
 }
 
 button {
@@ -69,4 +95,5 @@ button:focus {
   padding: 8px 12px;
   color: #fff;
   background-color: green;
+  vertical-align: middle;
 }
