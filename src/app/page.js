@@ -5,16 +5,18 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const router = useRouter();
   const [usersData, setUsersData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchusers = async () => {
     let result = await fetch("/api/users");
-    result = await result.json()
-    setUsersData(result.result)
-  }
+    result = await result.json();
+    setUsersData(result.result);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    fetchusers()
-  }, [])
+    fetchusers();
+  }, []);
 
   const goToAddUser = () => {
     router.push("/addnewuser");
@@ -34,9 +36,6 @@ export default function Home() {
     router.push("/viewuser/" + id);
   };
 
-  if (usersData.length === 0) 
-  return <div>No users found</div>
-
   return (
     <main>
       <div className="user-table-header-container">
@@ -49,53 +48,63 @@ export default function Home() {
           </span>
         </div>
       </div>
-      <div className="user-data-table-container">
-        <table className="user-data-table">
-          <thead>
-            <tr>
-              <td className="user-table-header-one">Sr. no.</td>
-              <td className="user-table-header-two">Name</td>
-              <td className="user-table-header-three">Phone Number</td>
-              <td className="user-table-header-four">Email</td>
-              <td className="user-table-header-five" colSpan={2}>
-                Actions
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            {usersData.map((user, index) => (
-              <tr
-                key={user._id}
-                className="user-table-data-row"
-                onClick={() => viewUserDetails(user._id)}
-              >
-                <td>{index + 1}</td>
-                <td className="user-table-name">
-                  {user.firstName + " " + user.lastName}
-                </td>
-                <td>{user.phoneNumber}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button
-                    onClick={(e) => goToUserEdit(user._id, e)}
-                    className="user-table-delete-btn"
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={(e) => deleteUser(user._id, e)}
-                    className="user-table-edit-btn"
-                  >
-                    Delete
-                  </button>
+      {usersData.length === 0 && !loading ? (
+        <div className="loader-spinner-container">
+          <div>No users found</div>
+        </div>
+      ) : loading ? (
+        <div className="loader-spinner-container">
+          <div className="loader-spinner"></div>
+        </div>
+      ) : (
+        <div className="user-data-table-container">
+          <table className="user-data-table">
+            <thead>
+              <tr>
+                <td className="user-table-header-one">Sr. no.</td>
+                <td className="user-table-header-two">Name</td>
+                <td className="user-table-header-three">Phone Number</td>
+                <td className="user-table-header-four">Email</td>
+                <td className="user-table-header-five" colSpan={2}>
+                  Actions
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {usersData.map((user, index) => (
+                <tr
+                  key={user._id}
+                  className="user-table-data-row"
+                  onClick={() => viewUserDetails(user._id)}
+                >
+                  <td>{index + 1}</td>
+                  <td className="user-table-name">
+                    {user.firstName + " " + user.lastName}
+                  </td>
+                  <td>{user.phoneNumber}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <button
+                      onClick={(e) => goToUserEdit(user._id, e)}
+                      className="user-table-delete-btn"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={(e) => deleteUser(user._id, e)}
+                      className="user-table-edit-btn"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </main>
   );
 }
