@@ -1,7 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const UpdateUser = () => {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("John");
   const [lastName, setLastName] = useState("Smith");
   const [phoneNumber, setPhoneNumber] = useState("9810101010");
@@ -77,6 +79,15 @@ const UpdateUser = () => {
         ></input>
         {emailError ? <div className="error-message">{emailError}</div> : null}
         <div className="add-user-btn-container">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/");
+            }}
+            className="add-user-cancel-btn"
+          >
+            Cancel
+          </button>
           <button type="submit" className="add-user-btn">
             Update User
           </button>
