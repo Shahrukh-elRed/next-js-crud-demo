@@ -12,6 +12,7 @@ const UpdateUser = ({ params }) => {
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [buttonLoader, setButtonLoader] = useState(false);
 
   const fetchUser = async () => {
     let response = await fetch(`/api/users/${params.userId}`);
@@ -53,12 +54,15 @@ const UpdateUser = ({ params }) => {
       setEmailError("Invalid email");
       hasErrors = true;
     }
+    if (hasErrors) setButtonLoader(false);
 
     if (!hasErrors) updateUser();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (buttonLoader) return false;
+    setButtonLoader(true);
     validateAllInputs();
   };
 
@@ -69,9 +73,13 @@ const UpdateUser = ({ params }) => {
     });
     data = await data.json();
     if (data.success) {
+      setButtonLoader(false);
       alert("user has been updated");
       router.push("/");
-    } else alert("Something went wrong! please try again");
+    } else {
+      alert("Something went wrong! please try again");
+      setButtonLoader(false);
+    }
   };
 
   return (
@@ -140,7 +148,13 @@ const UpdateUser = ({ params }) => {
               Cancel
             </button>
             <button type="submit" className="add-user-btn">
-              Update User
+              {buttonLoader ? (
+                <span className="update-btn-loader-container">
+                  <span className="btn-loader-spinner"></span>
+                </span>
+              ) : (
+                <>Update User</>
+              )}
             </button>
           </div>
         </form>

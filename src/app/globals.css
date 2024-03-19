@@ -311,6 +311,20 @@ input::-webkit-inner-spin-button {
   margin: 0 12.8px;
 }
 
+.add-btn-loader-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5px 37px;
+}
+
+.update-btn-loader-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5px 31.4px;
+}
+
 .btn-loader-spinner {
   display: inline-flex;
   width: 12px;

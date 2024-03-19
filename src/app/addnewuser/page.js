@@ -11,6 +11,7 @@ const AddNewUser = () => {
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [buttonLoader, setButtonLoader] = useState(false);
 
   const createNewUser = async () => {
     let result = await fetch("/api/createuser", {
@@ -20,9 +21,11 @@ const AddNewUser = () => {
     result = await result.json();
     if (result.success) {
       alert("user added");
+      setButtonLoader(false);
       router.push("/");
     } else {
       alert("Something went wrong! please try again");
+      setButtonLoader(false);
     }
   };
 
@@ -49,12 +52,15 @@ const AddNewUser = () => {
       setEmailError("Invalid email");
       hasErrors = true;
     }
+    if (hasErrors) setButtonLoader(false);
 
     if (!hasErrors) createNewUser();
   };
 
   const addUser = (e) => {
+    if (buttonLoader) return false;
     e.preventDefault();
+    setButtonLoader(true);
     validateAllInputs();
   };
 
@@ -117,7 +123,13 @@ const AddNewUser = () => {
             Cancel
           </button>
           <button type="submit" className="add-user-btn">
-            Add New User
+            {buttonLoader ? (
+              <span className="add-btn-loader-container">
+                <span className="btn-loader-spinner"></span>
+              </span>
+            ) : (
+              <>Add New User</>
+            )}
           </button>
         </div>
       </form>

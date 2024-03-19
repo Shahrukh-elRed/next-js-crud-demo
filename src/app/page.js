@@ -30,6 +30,7 @@ export default function Home() {
 
   const deleteUser = async (id, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
+    if (deleteId) return false;
     setDeleteId(id);
     let result = await fetch(`/api/users/${id}`, { method: "DELETE" });
     result = await result.json();
