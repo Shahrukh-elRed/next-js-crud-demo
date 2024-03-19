@@ -3,6 +3,7 @@ import { connectionString } from "../../../../util/db";
 import { User } from "../../../../util/model/user";
 import mongoose from "mongoose";
 
+export const dynamic = "force-dynamic";
 export const GET = async () => {
   let data = [];
   let success = true;

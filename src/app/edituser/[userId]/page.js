@@ -8,6 +8,7 @@ const UpdateUser = ({ params }) => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [prevData, setPrevData] = useState(null);
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -23,6 +24,7 @@ const UpdateUser = ({ params }) => {
       setLastName(response.result.lastName);
       setPhoneNumber(response.result.phoneNumber);
       setEmail(response.result.email);
+      setPrevData(response.result);
       setLoading(false);
     }
   };
@@ -53,6 +55,15 @@ const UpdateUser = ({ params }) => {
     if (!validateEmail) {
       setEmailError("Invalid email");
       hasErrors = true;
+    }
+    if (
+      prevData.firstName === firstName &&
+      prevData.lastName === lastName &&
+      prevData.phoneNumber === phoneNumber &&
+      prevData.email === email
+    ) {
+      hasErrors = true;
+      alert("Please make any changes to update the user data");
     }
     if (hasErrors) setButtonLoader(false);
 
