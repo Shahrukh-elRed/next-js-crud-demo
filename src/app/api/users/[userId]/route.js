@@ -35,3 +35,19 @@ export const PUT = async (request, content) => {
   }
   return NextResponse.json({ result: data, success, message });
 };
+
+export const DELETE = async (request, content) => {
+  const { userId } = content.params;
+  const record = { _id: userId };
+  let data = {};
+  let success = true;
+  let message = "user deleted successfully";
+  try {
+    await mongoose.connect(connectionString);
+    data = await User.deleteOne(record);
+  } catch {
+    message = "Error! Something went wrong";
+    success = false;
+  }
+  return NextResponse.json({ result: data, success, message });
+};
