@@ -58,8 +58,8 @@ const AddNewUser = () => {
   };
 
   const addUser = (e) => {
-    if (buttonLoader) return false;
     e.preventDefault();
+    if (buttonLoader) return false;
     setButtonLoader(true);
     validateAllInputs();
   };
