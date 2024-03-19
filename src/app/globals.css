@@ -289,3 +289,9 @@ input::-webkit-inner-spin-button {
     transform: rotate(1turn);
   }
 }
+
+.single-user-not-found {
+  display: flex;
+  margin-top: 30px;
+  justify-content: center;
+}
