@@ -27,9 +27,14 @@ export default function Home() {
     router.push("/edituser/" + id);
   };
 
-  const deleteUser = (id, e) => {
+  const deleteUser = async (id, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
-    console.log("delete user id => ", id);
+    let result = await fetch(`/api/users/${id}`, { method: "DELETE" });
+    result = await result.json();
+    if (result.success) {
+      alert("user deleted");
+      fetchusers();
+    } else alert("Somethign went wrong! please try again");
   };
 
   const viewUserDetails = (id) => {
