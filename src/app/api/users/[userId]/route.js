@@ -18,3 +18,20 @@ export const GET = async (request, content) => {
   }
   return NextResponse.json({ result: data, success, message });
 };
+
+export const PUT = async (request, content) => {
+  const { userId } = content.params;
+  const filter = { _id: userId };
+  let data = {};
+  let success = true;
+  let message = "user updated successfully";
+  try {
+    const payload = await request.json();
+    await mongoose.connect(connectionString);
+    data = await User.findOneAndUpdate(filter, payload);
+  } catch {
+    message = "Error! Something went wrong";
+    success = false;
+  }
+  return NextResponse.json({ result: data, success, message });
+};

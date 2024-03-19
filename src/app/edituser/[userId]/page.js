@@ -4,21 +4,23 @@ import { useEffect, useState } from "react";
 
 const UpdateUser = ({ params }) => {
   const router = useRouter();
-  const [firstName, setFirstName] = useState("John");
-  const [lastName, setLastName] = useState("Smith");
-  const [phoneNumber, setPhoneNumber] = useState("9810101010");
-  const [email, setEmail] = useState("john@test.com");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [userData, setUserData] = useState(null);
 
   const fetchUser = async () => {
     let response = await fetch(`/api/users/${params.userId}`);
     response = await response.json();
     if (!response.success) router.push("/");
     else {
-      setUserData(response.result);
+      setFirstName(response.result.firstName);
+      setLastName(response.result.lastName);
+      setPhoneNumber(response.result.phoneNumber);
+      setEmail(response.result.email);
     }
   };
 
@@ -27,30 +29,56 @@ const UpdateUser = ({ params }) => {
   }, []);
 
   const validateAllInputs = () => {
-    if (firstName === "" || firstName.length <= 3)
-      setFirstNameError("First Name should be atleast 4 characters long");
-    if (phoneNumber.length !== 10)
-      setPhoneNumberError("Phone number should be of 10 digits");
-    if (email === "") setEmailError("Email cannot be empty");
+    let hasErrors = false;
+    if (firstName === "" || firstName.length <= 2) {
+      setFirstNameError(
+        (prev) => (prev = "First Name should be atleast 3 characters long")
+      );
+      hasErrors = true;
+    }
+    if (phoneNumber.length !== 10) {
+      setPhoneNumberError(
+        (prev) => (prev = "Phone number should be of 10 digits")
+      );
+      hasErrors = true;
+    }
+    if (email === "") {
+      setEmailError((prev) => (prev = "Email cannot be empty"));
+      hasErrors = true;
+    }
     const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!validateEmail) setEmailError("Invalid email");
+    if (!validateEmail) {
+      setEmailError("Invalid email");
+      hasErrors = true;
+    }
+
+    if (!hasErrors) updateUser();
   };
 
-  const updateUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     validateAllInputs();
+  };
 
-    if (firstNameError || phoneNumberError || emailError) return false;
-    console.log("clicked");
+  const updateUser = async () => {
+    let data = await fetch(`/api/users/${params.userId}`, {
+      method: "PUT",
+      body: JSON.stringify({ firstName, lastName, phoneNumber, email }),
+    });
+    data = await data.json();
+    if (data.success) {
+      alert("user has been updated");
+      router.push("/");
+    } else alert("Something went wrong! please try again");
   };
 
   return (
     <div className="user-details-page-container">
       <div className="user-table-header margin-left-header">Update User</div>
-      <form onSubmit={(e) => updateUser(e)} className="add-user-form">
+      <form onSubmit={(e) => handleSubmit(e)} className="add-user-form">
         <input
           type="text"
-          value={userData?.firstName || ""}
+          value={firstName}
           onChange={(e) => {
             setFirstNameError("");
             setFirstName(e.target.value);
@@ -63,13 +91,13 @@ const UpdateUser = ({ params }) => {
         ) : null}
         <input
           type="text"
-          value={userData?.lastName || ""}
+          value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           placeholder="Enter last name (optional)"
         ></input>
         <input
           type="number"
-          value={userData?.phoneNumber || ""}
+          value={phoneNumber}
           onChange={(e) => {
             setPhoneNumberError("");
             setPhoneNumber(e.target.value);
@@ -83,7 +111,7 @@ const UpdateUser = ({ params }) => {
         ) : null}
         <input
           type="text"
-          value={userData?.email || ""}
+          value={email}
           onChange={(e) => {
             setEmailError("");
             setEmail(e.target.value);

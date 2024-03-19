@@ -11,9 +11,6 @@ const AddNewUser = () => {
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [success, setSuccess] = useState(false);
-
-  success && redirect("/");
 
   const createNewUser = async () => {
     let result = await fetch("/api/createuser", {
@@ -21,7 +18,12 @@ const AddNewUser = () => {
       body: JSON.stringify({ firstName, lastName, phoneNumber, email }),
     });
     result = await result.json();
-    if (result.success) setSuccess(true);
+    if (result.success) {
+      alert("user added");
+      router.push("/");
+    } else {
+      alert("Something went wrong! please try again");
+    }
   };
 
   const validateAllInputs = () => {
