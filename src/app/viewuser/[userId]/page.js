@@ -19,8 +19,6 @@ const ViewUser = ({ params }) => {
     fetchUser();
   }, []);
 
-  // return <div className="single-user-not-found"></div>
-
   return (
     <div className="user-details-page-container">
       <div className="user-table-header margin-left-header">User Details</div>

@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const UpdateUser = () => {
+const UpdateUser = ({ params }) => {
   const router = useRouter();
   const [firstName, setFirstName] = useState("John");
   const [lastName, setLastName] = useState("Smith");
@@ -11,6 +11,20 @@ const UpdateUser = () => {
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [userData, setUserData] = useState(null);
+
+  const fetchUser = async () => {
+    let response = await fetch(`/api/users/${params.userId}`);
+    response = await response.json();
+    if (!response.success) router.push("/");
+    else {
+      setUserData(response.result);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const validateAllInputs = () => {
     if (firstName === "" || firstName.length <= 3)
@@ -36,7 +50,7 @@ const UpdateUser = () => {
       <form onSubmit={(e) => updateUser(e)} className="add-user-form">
         <input
           type="text"
-          value={firstName}
+          value={userData?.firstName || ""}
           onChange={(e) => {
             setFirstNameError("");
             setFirstName(e.target.value);
@@ -49,13 +63,13 @@ const UpdateUser = () => {
         ) : null}
         <input
           type="text"
-          value={lastName}
+          value={userData?.lastName || ""}
           onChange={(e) => setLastName(e.target.value)}
           placeholder="Enter last name (optional)"
         ></input>
         <input
           type="number"
-          value={phoneNumber}
+          value={userData?.phoneNumber || ""}
           onChange={(e) => {
             setPhoneNumberError("");
             setPhoneNumber(e.target.value);
@@ -69,7 +83,7 @@ const UpdateUser = () => {
         ) : null}
         <input
           type="text"
-          value={email}
+          value={userData?.email || ""}
           onChange={(e) => {
             setEmailError("");
             setEmail(e.target.value);
