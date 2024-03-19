@@ -56,11 +56,13 @@ const ViewUser = ({ params }) => {
           </div>
         </div>
       )}
-      <div className="home-link-container">
-        <Link href="/" className="home-link">
-          Go back to Home
-        </Link>
-      </div>
+      {loading ? null : (
+        <div className="home-link-container">
+          <Link href="/" className="home-link">
+            Go back to Home
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
