@@ -11,6 +11,7 @@ const UpdateUser = ({ params }) => {
   const [firstNameError, setFirstNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
     let response = await fetch(`/api/users/${params.userId}`);
@@ -21,6 +22,7 @@ const UpdateUser = ({ params }) => {
       setLastName(response.result.lastName);
       setPhoneNumber(response.result.phoneNumber);
       setEmail(response.result.email);
+      setLoading(false);
     }
   };
 
@@ -75,66 +77,74 @@ const UpdateUser = ({ params }) => {
   return (
     <div className="user-details-page-container">
       <div className="user-table-header margin-left-header">Update User</div>
-      <form onSubmit={(e) => handleSubmit(e)} className="add-user-form">
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => {
-            setFirstNameError("");
-            setFirstName(e.target.value);
-          }}
-          placeholder="Enter first name"
-          className={firstNameError ? "text-input-field-error" : ""}
-        ></input>
-        {firstNameError ? (
-          <div className="error-message">{firstNameError}</div>
-        ) : null}
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          placeholder="Enter last name (optional)"
-        ></input>
-        <input
-          type="number"
-          value={phoneNumber}
-          onChange={(e) => {
-            setPhoneNumberError("");
-            setPhoneNumber(e.target.value);
-          }}
-          onWheel={(e) => e.currentTarget.blur()}
-          placeholder="Enter 10 digit phone number"
-          className={phoneNumberError ? "text-input-field-error" : ""}
-        ></input>
-        {phoneNumberError ? (
-          <div className="error-message">{phoneNumberError}</div>
-        ) : null}
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => {
-            setEmailError("");
-            setEmail(e.target.value);
-          }}
-          placeholder="Enter email"
-          className={emailError ? "text-input-field-error" : ""}
-        ></input>
-        {emailError ? <div className="error-message">{emailError}</div> : null}
-        <div className="add-user-btn-container">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              router.push("/");
-            }}
-            className="add-user-cancel-btn"
-          >
-            Cancel
-          </button>
-          <button type="submit" className="add-user-btn">
-            Update User
-          </button>
+      {loading ? (
+        <div className="update-user-loader-spinner-container">
+          <div className="loader-spinner"></div>
         </div>
-      </form>
+      ) : (
+        <form onSubmit={(e) => handleSubmit(e)} className="add-user-form">
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => {
+              setFirstNameError("");
+              setFirstName(e.target.value);
+            }}
+            placeholder="Enter first name"
+            className={firstNameError ? "text-input-field-error" : ""}
+          ></input>
+          {firstNameError ? (
+            <div className="error-message">{firstNameError}</div>
+          ) : null}
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Enter last name (optional)"
+          ></input>
+          <input
+            type="number"
+            value={phoneNumber}
+            onChange={(e) => {
+              setPhoneNumberError("");
+              setPhoneNumber(e.target.value);
+            }}
+            onWheel={(e) => e.currentTarget.blur()}
+            placeholder="Enter 10 digit phone number"
+            className={phoneNumberError ? "text-input-field-error" : ""}
+          ></input>
+          {phoneNumberError ? (
+            <div className="error-message">{phoneNumberError}</div>
+          ) : null}
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => {
+              setEmailError("");
+              setEmail(e.target.value);
+            }}
+            placeholder="Enter email"
+            className={emailError ? "text-input-field-error" : ""}
+          ></input>
+          {emailError ? (
+            <div className="error-message">{emailError}</div>
+          ) : null}
+          <div className="add-user-btn-container">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                router.push("/");
+              }}
+              className="add-user-cancel-btn"
+            >
+              Cancel
+            </button>
+            <button type="submit" className="add-user-btn">
+              Update User
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };

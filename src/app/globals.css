@@ -267,7 +267,15 @@ input::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 80px;
+  margin-top: 120px;
+}
+
+.update-user-loader-spinner-container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 120px;
 }
 
 .loader-spinner {
