@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const router = useRouter();
   const [usersData, setUsersData] = useState([]);
+  const [deleteId, setDeleteId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchusers = async () => {
@@ -29,12 +30,17 @@ export default function Home() {
 
   const deleteUser = async (id, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
+    setDeleteId(id);
     let result = await fetch(`/api/users/${id}`, { method: "DELETE" });
     result = await result.json();
     if (result.success) {
-      alert("user deleted");
       fetchusers();
-    } else alert("Somethign went wrong! please try again");
+      setDeleteId(null);
+      alert("user deleted");
+    } else {
+      alert("Somethign went wrong! please try again");
+      setDeleteId(null);
+    }
   };
 
   const viewUserDetails = (id) => {
@@ -101,7 +107,13 @@ export default function Home() {
                       onClick={(e) => deleteUser(user._id, e)}
                       className="user-table-edit-btn"
                     >
-                      Delete
+                      {user._id === deleteId ? (
+                        <span className="delete-btn-loader-container">
+                          <span className="btn-loader-spinner"></span>
+                        </span>
+                      ) : (
+                        <>Delete</>
+                      )}
                     </button>
                   </td>
                 </tr>
