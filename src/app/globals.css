@@ -252,6 +252,14 @@ input::-webkit-inner-spin-button {
     justify-content: center;
     margin-right: 0;
   }
+
+  .update-user-loader-spinner-container {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 120px;
+  }
 }
 
 .error-message {
